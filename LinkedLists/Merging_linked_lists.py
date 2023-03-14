@@ -36,6 +36,7 @@
 #   O(n+m) time (because iterating through lengths of both lists)
 #   O(n) space (because creating a data structure to hold "n" variables of a linked list)
 
+
 # 2. Similar idea but now without the use of an extra data structure. Instead, answer can be found by using
 # the knowledge that from the intersection point onwards, the length of the two linked lists is the same. Meaning
 # that by calculating the difference in their lengths, the intersection can be found. Would still have to iterate
@@ -59,3 +60,122 @@
 # O(n+m) time (since still iterating through both linked lists
 # O(1) space (since no longer using any extra space that scales depending on the size of the input/linked list size
 
+
+# 3. Big brain way to solve
+# Same idea as previous way, only now you ignore having to calculate any lengths of the sort by having the pointers
+# that iterate through the two linked lists wrap around each other once they reach the end of their respective lists.
+# Effectively making them go through the same amount of nodes to reach the intersection node at the same time.
+
+# IE: Imagine there are pointers for each linked list iterating through their respective LL at the same time. Since the
+# second LL is shorter than the first, it'll reach its end before the first one like so
+# LL1: 2 -> 3 -> 7 (pointer is here) -> 5
+# LL2: 4 -> 7 -> 5 (pointer is here)
+# Instead of making the pointer for LL2 stop, have it point to the start of the start of LL1 to get
+# LL1: 2 (Pointer 2 here) -> 3 -> 7 -> 5 (Pointer 1 here)
+# LL2: 4 -> 7 -> 5
+# Do the same for the first pointer once it reaches the end of its own linked list to get
+# LL1: 2 -> 3 (Pointer 2 here) -> 7 -> 5
+# LL2: 4 (Pointer 1 here) -> 7 -> 5
+# Iterate both pointers to get them to point to the same node, 7
+# LL1: 2 -> 3  -> 7 (Pointer 2 here) -> 5
+# LL2: 4  -> 7 (Pointer 1 here) -> 5
+
+# Space Time Complexity:
+# O(n+m) time (since still iterating through both linked lists)
+# O(1) space (same reason as before, no scaling extra space)
+
+import numpy as np
+
+first_array = np.random.randint(0, 10, 10)
+second_array = np.random.randint(0, 10, 10)
+print(first_array)
+print(second_array)
+
+class LinkedList:
+    def __init__(self, value):
+        self.value = value
+        self.next = None
+
+def make_linked_list(array):
+    while array is not None:
+        node = LinkedList(array[0])
+        print(node.value)
+        node.next = LinkedList(array[1])
+        print(node.next.value)
+        array.pop(0)
+        make_linked_list(array)
+
+make_linked_list(first_array)
+# class node:
+#     def __init__(self, data=None):
+#         self.data = data
+#         self.next = None
+#         #self.value = data
+#
+#
+# class linked_list:
+#     def __init__(self):
+#         self.head = node()
+#         #self.value = self.head.value
+#
+#     def append(self, data):
+#         new_node = node(data)
+#         curr = self.head
+#         while curr.next is not None:
+#             curr = curr.next
+#         curr.next = new_node
+#
+#     def length(self):
+#         curr = self.head
+#         total = 0
+#         while curr.next is not None:
+#             total += 1
+#             curr = curr.next
+#         return total
+#
+#     def display(self):
+#         elems = []
+#         curr_node = self.head
+#         while curr_node.next is not None:
+#             curr_node = curr_node.next
+#             elems.append(curr_node.data)
+#         print(elems)
+#
+#
+# LL1 = linked_list()
+# LL1.append(4)
+# LL1.append(5)
+# LL1.append(6)
+# LL1.append(7)
+# LL1.append(8)
+# LL1.display()
+#
+# LL2 = linked_list()
+# LL2.append(9)
+# LL2.append(1)
+# LL2.append(6)
+# LL2.append(7)
+# LL2.append(8)
+# LL2.display()
+
+def mergingLinkedLists(linkedListOne, linkedListTwo):
+    pointerOne = linkedListOne.head
+    pointerTwo = linkedListTwo.head
+
+    while pointerOne is not pointerTwo:
+        # If pointerOne has reached the end of the first linked list, will have a value of none/null
+        # So make
+        if not pointerOne:
+            pointerOne = linkedListTwo.head
+        else:
+            pointerOne = pointerOne.next
+
+        if not pointerTwo:
+            pointerTwo = linkedListOne.head
+        else:
+            pointerTwo = pointerTwo.next
+    print(pointerOne.data)
+
+
+mergingLinkedLists(LL1, LL2)
+print("howdy")
