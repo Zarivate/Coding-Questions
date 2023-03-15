@@ -84,28 +84,38 @@
 # O(n+m) time (since still iterating through both linked lists)
 # O(1) space (same reason as before, no scaling extra space)
 
-import numpy as np
+import random
 
-first_array = np.random.randint(0, 10, 10)
-second_array = np.random.randint(0, 10, 10)
-print(first_array)
-print(second_array)
 
 class LinkedList:
     def __init__(self, value):
         self.value = value
         self.next = None
 
-def make_linked_list(array):
-    while array is not None:
-        node = LinkedList(array[0])
-        print(node.value)
-        node.next = LinkedList(array[1])
-        print(node.next.value)
-        array.pop(0)
-        make_linked_list(array)
 
-make_linked_list(first_array)
+# Adjust the values here to do more testing
+arr = [1, 2, 3, 4, 5, 6]
+arr2 = [0, 7, 9, 3, 4, 5, 6]
+
+LL1 = LinkedList(arr[0])
+LL2 = LinkedList(arr2[0])
+print(LL1)
+print(LL2)
+
+
+def make_linked_list(array, node):
+    while array is not None:
+        array = array.pop()
+        print(array[0])
+        next_node = LinkedList(array[0])
+        node.next = next_node
+        print(node.next.value)
+        make_linked_list(array, node.next)
+
+
+make_linked_list(arr, LL1)
+
+
 # class node:
 #     def __init__(self, data=None):
 #         self.data = data
@@ -159,22 +169,22 @@ make_linked_list(first_array)
 # LL2.display()
 
 def mergingLinkedLists(linkedListOne, linkedListTwo):
-    pointerOne = linkedListOne.head
-    pointerTwo = linkedListTwo.head
+    pointerOne = linkedListOne
+    pointerTwo = linkedListTwo
 
     while pointerOne is not pointerTwo:
         # If pointerOne has reached the end of the first linked list, will have a value of none/null
         # So make
         if not pointerOne:
-            pointerOne = linkedListTwo.head
+            pointerOne = linkedListTwo
         else:
             pointerOne = pointerOne.next
 
         if not pointerTwo:
-            pointerTwo = linkedListOne.head
+            pointerTwo = linkedListOne
         else:
             pointerTwo = pointerTwo.next
-    print(pointerOne.data)
+    print(pointerOne.value)
 
 
 mergingLinkedLists(LL1, LL2)
