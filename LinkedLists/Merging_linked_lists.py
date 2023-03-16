@@ -84,97 +84,77 @@
 # O(n+m) time (since still iterating through both linked lists)
 # O(1) space (same reason as before, no scaling extra space)
 
-import random
-
-
 class LinkedList:
     def __init__(self, value):
         self.value = value
         self.next = None
 
 
-# Adjust the values here to do more testing
-arr = [1, 2, 3, 4, 5, 6]
-arr2 = [0, 7, 9, 3, 4, 5, 6]
+LL1 = LinkedList(1)
+LL1.next = LinkedList(2)
+LL1.next.next = LinkedList(3)
+LL1.next.next.next = LinkedList(4)
+LL1.next.next.next.next = LinkedList(5)
+LL1.next.next.next.next.next = LinkedList(6)
+print()
+LL2 = LinkedList(0)
+LL2.next = LinkedList(9)
+LL2.next.next = LinkedList(3)
+LL2.next.next.next = LinkedList(4)
+LL2.next.next.next.next = LinkedList(5)
+LL2.next.next.next.next.next = LinkedList(6)
 
-LL1 = LinkedList(arr[0])
-LL2 = LinkedList(arr2[0])
-print(LL1)
-print(LL2)
+# Function to print out the values
+def print_linked_list(item):
+    # base case
+    if item is None:
+        return
+    # Print current node
+    print(item.value)
+    # Print following node
+    print_linked_list(item.next)
 
 
-def make_linked_list(array, node):
-    while array is not None:
-        array = array.pop()
-        print(array[0])
-        next_node = LinkedList(array[0])
-        node.next = next_node
-        print(node.next.value)
-        make_linked_list(array, node.next)
+print_linked_list(LL1)
+print()
+print_linked_list(LL2)
+print()
 
 
-make_linked_list(arr, LL1)
+# Array to be made into Linked Lists in combination with function the values here to do more testing
+# arr = [1, 2, 3, 4, 5, 6]
+# arr2 = [0, 7, 9, 3, 4, 5, 6]
 
 
-# class node:
-#     def __init__(self, data=None):
-#         self.data = data
-#         self.next = None
-#         #self.value = data
+# Dummy function to automatically make linked lists from an array
+# def make_linked_list(sample_array=None, sample_node=LinkedList(0)):
+#     while sample_array and sample_array[0] is not None:
+#         print("The passed in array is " + str(sample_array))
+#         sample_array.pop(0)
+#         print("The passed in array is now " + str(sample_array))
+#         print("The node value passed in is " + str(sample_node.value))
+#         print(sample_node.next)
+#         sample_node.next = LinkedList(sample_array[0])
+#         print(sample_node.next.value)
+#         print()
+#         make_linked_list(sample_array, sample_node.next)
+#     return sample_node.next
 #
 #
-# class linked_list:
-#     def __init__(self):
-#         self.head = node()
-#         #self.value = self.head.value
-#
-#     def append(self, data):
-#         new_node = node(data)
-#         curr = self.head
-#         while curr.next is not None:
-#             curr = curr.next
-#         curr.next = new_node
-#
-#     def length(self):
-#         curr = self.head
-#         total = 0
-#         while curr.next is not None:
-#             total += 1
-#             curr = curr.next
-#         return total
-#
-#     def display(self):
-#         elems = []
-#         curr_node = self.head
-#         while curr_node.next is not None:
-#             curr_node = curr_node.next
-#             elems.append(curr_node.data)
-#         print(elems)
-#
-#
-# LL1 = linked_list()
-# LL1.append(4)
-# LL1.append(5)
-# LL1.append(6)
-# LL1.append(7)
-# LL1.append(8)
-# LL1.display()
-#
-# LL2 = linked_list()
-# LL2.append(9)
-# LL2.append(1)
-# LL2.append(6)
-# LL2.append(7)
-# LL2.append(8)
-# LL2.display()
+# make_linked_list(arr, LL1)
 
-def mergingLinkedLists(linkedListOne, linkedListTwo):
+
+def merging_linked_lists(linkedListOne, linkedListTwo):
     pointerOne = linkedListOne
+
     pointerTwo = linkedListTwo
 
-    while pointerOne is not pointerTwo:
+    while pointerOne.value is not pointerTwo.value:
+        # Show the values as they iterate through the linked lists
+        print("Pointer one is currently at node " + str(pointerOne.value))
+        print("Pointer two is currently at node " + str(pointerTwo.value))
+
         # If pointerOne has reached the end of the first linked list, will have a value of none/null
-        # So make
         if not pointerOne:
             pointerOne = linkedListTwo
         else:
@@ -184,8 +164,15 @@ def mergingLinkedLists(linkedListOne, linkedListTwo):
             pointerTwo = linkedListOne
         else:
             pointerTwo = pointerTwo.next
-    print(pointerOne.value)
+
+    if pointerOne is not None:
+        print()
+        print("Pointer one is now at node " + str(pointerOne.value))
+        print("Pointer two is now at node " + str(pointerTwo.value))
+        print("They're now at the same node, thus we can end.")
+    else:
+        print("Null value")
+    return pointerOne
 
 
-mergingLinkedLists(LL1, LL2)
-print("howdy")
+merging_linked_lists(LL1, LL2)
