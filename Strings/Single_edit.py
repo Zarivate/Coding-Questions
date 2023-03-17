@@ -44,9 +44,91 @@
 # for any edits already made in the strings.
 # IE: "Howdy" and "Hwdy"
 # Iterate through both strings, at the 1st position will find a difference of "o" in the first string and "w" in the
-# second string. For now let's decide to remove the 
+# second string. For now let's decide to remove the "o". Keep track that used up first and only edit and keep iterating
+# through the strings. However, iterate only in the bigger string once. Will make it so the pointer for string 1 is
+# at "l" and pointer for string two also at "l". After this, keep iterating like normal until find any more differences.
+# If you do, then return false, else return True.
+# IE2: "Howdy" and "Hewdy"
+# The "replace" case/same string length case is even easier, instead of having to only iterate through the bigger string
+# like before, now just keep iterating as normal after finding a difference and keep track if any other difference shows
+# up. Since if one does, then return False else return True.
 
 
 # Space Time Complexity
 # O(n) time (since would only have to iterate to the end of one of the strings)
 # O(1) space (since not using up any extra memory that would scale with the problem/input size)
+
+# Edit these values to test out function
+first_string = "Howdy"
+second_string = "Hwdy"
+
+
+# First solution implementation
+def oneEditFirstSolution(stringOne, stringTwo):
+    lengthOne, lengthTwo = len(stringOne), len(stringTwo)
+
+    # If the difference in their lengths is greater than 1, than that means
+    # more than 1 edit will be required. Thus return false.
+    if abs(lengthOne - lengthTwo) > 1:
+        return False
+
+    # Go to the end of the shorter string
+    for i in range(min(lengthOne, lengthTwo)):
+        # Check whether characters match
+        if stringOne[i] != stringTwo[i]:
+            # If the first string is longer than the second
+            if lengthOne > lengthTwo:
+                # Return whether the first string's current position + 1, up till the end substring matches
+                # with the substring of the second string's current position to the end
+                return stringOne[i + 1:] == stringTwo[i:]
+            # Else if string two is longer, do the same but now for the second string
+            elif lengthTwo > lengthOne:
+                return stringOne[i:] == stringTwo[i + 1:]
+            else:
+                return stringOne[i + 1:] == stringTwo[i + 1:]
+
+    return True
+
+
+# Second solution implementation
+def oneEdit(stringOne, stringTwo):
+    lengthOne, lengthTwo = len(stringOne), len(stringTwo)
+
+    # If the difference in their lengths is greater than 1, than that means
+    # more than 1 edit will be required. Thus return false.
+    if abs(lengthOne - lengthTwo) > 1:
+        return False
+
+    editDone = False
+    pointerOne, pointerTwo = 0, 0
+
+    while pointerOne < lengthOne and pointerTwo < lengthTwo:
+        # If a character in the same position of both strings doesn't match
+        if stringOne[pointerOne] != stringTwo[pointerTwo]:
+            # Check to see if an edit has already been made
+            # If so return false, else set it to True and continue
+            if editDone:
+                return False
+            editDone = True
+
+            # If the first string is longer, than increment it's pointer by 1
+            if lengthOne > lengthTwo:
+                pointerOne += 1
+            # Else if the second string is longer, increment it's pointer by 1
+            elif lengthTwo > lengthOne:
+                pointerTwo += 1
+            # If the strings are the same length, just increment both their pointers by 1
+            else:
+                pointerOne += 1
+                pointerTwo += 1
+        # Else if the characters were the same, just increment the pointers and keep going
+        else:
+            pointerOne += 1
+            pointerTwo += 1
+
+    return True
+
+
+print(oneEditFirstSolution(first_string, second_string))
+print(oneEdit(first_string, second_string))
+
