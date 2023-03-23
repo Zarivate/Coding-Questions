@@ -30,11 +30,14 @@
 # Initialize every index as infinity besides the first position, as that would always take 0 jumps to get to
 # jumps = [0, inf, inf, inf, inf, inf, inf, inf, inf, inf, inf,]
 
-# Now
+# Now start at the 1st position in the main array, i=1 and array[i] = 4 although the actual value held within the
+# position doesn't really matter, what's important is that i = 1.
 
+# Set a pointer for the jumps array to 0, j = 0
 
 # Space Time Complexity
 # O(n^2) time (Because have to continuously go over the same positions in the array when updating the jumps array)
+# nested for loop as well
 # O(n) space (Because would use up extra space of "n" size/input array size when making the jumps array)
 
 # Implementation
@@ -46,9 +49,41 @@ def min_jumps(array):
 
     # For loop to go through outer array
     for i in range(1, len(array)):
-        # For loop to go through created jumps array
+        # For loop to go through created jumps array, will go up to whatever the i value is
         for j in range(0, i):
+            # If we find that the jump position in the input array, a value farther ahead than in the jumps array,
+            # is greater than the difference between the two positions, we see if we can update the corresponding
+            # i position in the jumps array
             if array[j] >= i - j:
+                # Check to see which value is lower and update corresponding position in the jumps array
                 jumps[i] = min(jumps[j] + 1, jumps[i])
     # Return last value in jumps array
     return jumps[-1]
+
+
+# 2.
+# The second possible way involves more
+
+# Space Time Complexity:
+# O(n) time (as would still need to iterate through the array 1 time to get answer)
+# O(1) space (not creating any extra space that scales with the size of the input like in the first example)
+
+# Implementation
+def min_jumps_optimal(array):
+    if len(array) == 1:
+        return 0
+
+    jumps = 0
+    maxReach = array[0]
+    steps = array[0]
+    for i in range(1, len(array) - 1):
+        maxReach = max(maxReach, i + array[i])
+        steps -= 1
+        if steps == 0:
+            jumps += 1
+            steps = maxReach - i
+    return jumps + 1
+
+example_array = [3, 4, 2, 1, 2, 3, 7, 1, 1, 1, 3]
+print(min_jumps(example_array))
+print(min_jumps_optimal(example_array))
