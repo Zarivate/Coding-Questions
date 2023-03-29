@@ -49,11 +49,12 @@ def permutations_creator(input_array, current_perm, permutations):
     else:
         # For loop to go through till the end of the array
         for i in range(len(input_array)):
-            print("Input array is " + str(input_array))
-            print(input_array[:i])
-            print(input_array[i + 1:])
+            #print("Input array is " + str(input_array))
+            #print(input_array[:i])
+            #print(input_array[i + 1:])
             new_array = input_array[:i] + input_array[i + 1:]
-            print("New array is " + str(new_array))
+            #print("New array is " + str(new_array))
+            print(" ")
             new_permutation = current_perm + [input_array[i]]
             permutations_creator(new_array, new_permutation, permutations)
 
@@ -62,8 +63,10 @@ def permutations_creator(input_array, current_perm, permutations):
 # length = 3
 # i = 0, because i = 0 when the input array is sliced up until position 0, IE: input_array[:i], it won't slice anything,
 # and we'll end up with input_array[:i] = []
-#
-
+# input_array[i + 1:] --> input_array[0 + 1:] --> input_array[i + 1:] --> [2,3], will slice from the 1 position up
+# until the end of the array, so we get [2,3]
+# new_array = input_array[:i] + input_array[i + 1:] --> [] + [2,3] = [2,3]
+# new_permutation = current_perm + [input_array[i]] --> [] + []
 
 array = [1, 2, 3]
 print(get_permutations(array))
