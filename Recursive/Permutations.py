@@ -36,7 +36,7 @@
 # This approach follows this idea by using a for loop to iterate through the array, all the while creating a new
 # array that helps to create the new permutation in different positions.
 
-# Implementation:
+# Implementation: This version is upper bound time and space complexity while the optimal isn't
 def get_permutations(input_array):
     # Create permutations array to hold final answers/combinations
     permutations = []
