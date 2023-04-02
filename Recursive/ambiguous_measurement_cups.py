@@ -96,28 +96,35 @@ def create_hashable_key(low, high):
 # Possible solution 2: Foregoes hashing anything and instead using whatever (True/False) value is at the top
 # of the call stack when returning answer
 
+# Example:
+# Program will begin by reaching
+
 def ambiguous_measurements(measuring_cups, low, high):
     failed_combos = set()
-    return measure_in_range(measuring_cups, low, high, 0, 0, failed_combos)
+    return measure_in_range_simple(measuring_cups, low, high, 0, 0, failed_combos)
 
 
-def measure_in_range(cups, low, high, current_low, current_high, failed_combos):
+def measure_in_range_simple(cups, low, high, current_low, current_high, failed_combos):
     # Set the current key to be the passed in low and high, in other words
     key = (current_low, current_high)
-    print(key)
+    print("The key is " + str(key) + " The current low is " + str(current_low) +
+          " and the current high is " + str(current_high))
 
     # Check to see if the key is already in the set, if so return False
     if key in failed_combos:
+        print("The key " + str(key) + " was a failed combination, False is returned for it")
         return False
 
     # If the current low passed in is greater than the high, than have exceeded range
     if current_low > high:
         # Add current key to failed combos set and return False
+        print("The current failed key is " + str(key))
         failed_combos.add(key)
         return False
 
     if (current_high - current_low) > (high - low):
         # Add current key to failed combos set and return False
+        print("The current failed key is " + str(key))
         failed_combos.add(key)
         return False
 
@@ -130,9 +137,10 @@ def measure_in_range(cups, low, high, current_low, current_high, failed_combos):
         # Get the cup low and high values
         cup_low, cup_high = cup
 
-        if measure_in_range(cups, low, high, current_low + cup_low, current_high + cup_high, failed_combos):
+        if measure_in_range_simple(cups, low, high, current_low + cup_low, current_high + cup_high, failed_combos):
             return True
     # Add to set that can't find a range using these values
+    print("The current failed combo is " + str(key))
     failed_combos.add(key)
     return False
 
