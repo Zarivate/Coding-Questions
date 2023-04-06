@@ -32,3 +32,43 @@ target_sample = 0
 
 # Implementation:
 
+def three_num_sum(array, targetSum):
+    # Sort array first
+    array.sort()
+    # Create an array to hold answers
+    trips = []
+    # For loop to iterate through array, will go until the second to last position in array because our right
+    # pointer will go until the last position. So it would be redundant to go to the last one here.
+    for i in range(len(array) - 2):
+        # Set the left pointer to start 1 ahead of the outer for loop
+        left_pointer = i + 1
+        # Set the right pointer to the end of the array
+        right_pointer = len(array) - 1
+        # While loop to find all combinations for the value/position of "i"/the outer for loop. Will alter the
+        # positions of the left and right pointers until left pointer overtakes right pointer position, because
+        # by then all possible combinations will have been done
+        while left_pointer < right_pointer:
+            # Add up all the values
+            current_sum = array[i] + array[left_pointer] + array[right_pointer]
+            # Check if match target value
+            if current_sum == targetSum:
+                # If so add to answers array
+                trips.append([array[i], array[left_pointer], array[right_pointer]])
+                # Iterate left pointer by 1, ie: move forward in array by 1
+                left_pointer += 1
+                # Decrement right pointer by 1, ie: move backwards in array by 1
+                right_pointer -= 1
+            # If current total is less than the target, that means we need a greater value. Because the array is
+            # sorted, we know that means we have to move the left pointer only.
+            elif current_sum < targetSum:
+                # Iterate left pointer by 1, ie: move forward in array by 1
+                left_pointer += 1
+            # If current total is greater than the target, that means we need a smaller value. Because the array is
+            # sorted, we know that means we have to move the right pointer only.
+            elif current_sum > targetSum:
+                # Decrement right pointer by 1, ie: move backwards in array by 1
+                right_pointer -= 1
+    return trips
+
+
+print(three_num_sum(array_sample, target_sample))
