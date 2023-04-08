@@ -97,7 +97,37 @@ def find_closest_helper(tree, target, closest_value):
 
 # In depth walkthrough:
 # At start
-# tree = 10, target = 12, closes_value = 10
+# tree = current_node = 10, target = 12, closes_value = 10
+# current_node = 10
+# Enter while loop
+# abs(target - closest_value) = abs(12 - 10) = 2
+# abs(target - current_node.value) = abs(12 - 10) = 2
+# 2 > 2, False are equal so move on to if check
+# target < current_node.value --> 12 < 10, False so move onto next if check
+# target > current_node.value --> 12 > 10, True so move into if check
+# current_node = current_node.right = 15
+
+# back to top of while loop
+# current_node = 15, target = 12, closes_value = 10
+# abs(target - closest_value) = abs(12 - 10) = 2
+# abs(target - current_node.value) = abs(12 - 15) = 5
+# 2 > 5, False so move on to if check
+# target < current_node.value --> 12 < 15, True so move to into if check
+# current_node = current_node.left = 13
+
+# back to top of while loop
+# current_node = 13, target = 12, closes_value = 10
+# abs(target - closest_value) = abs(12 - 10) = 2
+# abs(target - current_node.value) = abs(12 - 13) = 1
+# 2 > 1, True so move into if check
+# closest_value = current_node.value = 13
+# target < current_node.value --> 12 < 13, True so move to into if check
+# current_node = current_node.left = null/none
+
+# Go back to top of while loop
+# current_node == None/null so finish loop
+# return closest_value
+# return 13
 
 
 print(closest_value_in_bst(sample_tree, target_sample))
