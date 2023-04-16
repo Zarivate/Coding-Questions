@@ -1,3 +1,4 @@
+from tkinter import *
 # Question
 # Given two binary trees, merge them and return the resulting tree. Any overlapping nodes should be summed and returned
 # as such in the resulting tree, else use whatever existing node(s) are already there.
@@ -26,6 +27,12 @@ sample_tree2.left = BinaryTree(5)
 sample_tree2.left.left = BinaryTree(2)
 sample_tree2.right.left = BinaryTree(7)
 sample_tree2.right.right = BinaryTree(6)
+
+window = Tk()
+example_image = PhotoImage(file='Merge_binary_trees_example.png')
+example_label = Label(image=example_image)
+example_label.pack()
+window.mainloop()
 
 
 # Optimal Space & Time Complexity:
@@ -115,4 +122,6 @@ def merge_iteratively(tree1, tree2):
 # tree1_node.left exists so go to else statement
 # tree1_stack.append(tree1_node.left) --> tree1_stack.append(3), tree1_stack = [3]
 # tree2_stack.append(tree2_node.left) --> tree2_stack.append(5), tree2_stack = [5]
-#
+# tree1_node.right = 2, is not None/null so go to else check
+# tree1_stack.append(tree1_node.right) --> tree1_stack.append(2), tree1_stack = [2, 3]
+# tree2_stack.append(tree2_node.right) --> tree2_stack.append(9), tree2_stack = [9, 5]
