@@ -1,3 +1,5 @@
+from tkinter import *
+
 # Never even heard of this type of tree existing before this question by the way
 
 # Question:
@@ -134,7 +136,7 @@ print(evaluate_tree(example_tree))
 # Now back again to evaluate_tree(-3)
 # If check for -3 so operation is,
 # left_side / right_side
-# 8/3, remebering round to 0 rule would make it 2
+# 8/3, remembering round to 0 rule would make it 2
 # ***********************************************
 # Finally back at top,
 # tree.value = -1
@@ -143,3 +145,10 @@ print(evaluate_tree(example_tree))
 # If check for -1 means operation is
 # 4 + 2 = 6
 # Return 6
+
+# Visual example of problem
+window = Tk()
+example_image = PhotoImage(file='evaluate_expression_tree_example.png')
+example_label = Label(image=example_image)
+example_label.pack()
+window.mainloop()
