@@ -75,7 +75,9 @@ def get_shortest(strings):
 
 # Function to modify existing set of potential matches
 def remove(string, potential_matches):
-    # Convert passed in string into a set that will hold all it's unique values
+    # Convert passed in string into a set that will hold all its unique values. This is where the upperbound of the
+    # space complexity for the question comes into play. As the largest set that will need to be created will be of
+    # the longest string that could be of "m" size.
     unique_chars = set(string)
 
     # In order to avoid modifying set as iterating through it which could cause problems, is first converted into a
@@ -87,3 +89,15 @@ def remove(string, potential_matches):
 
 
 print(common_characters(example_strings))
+
+
+# Bonus big boy one line answer
+def common_characters_one_line(strings):
+    # The "*", outside the brackets and parentheses is an unpacking operator, similar to the spread operator
+    # in JS. Makes the iterable into a sequence of items so can be properly returned, else won't be able to
+    # because intersection doesn't apply to a list object. With the use of "*", the iterable list is turned into
+    # a sequence of items. In this case, the characters in the string of the strings.
+    return set.intersection(*[{char for char in string} for string in strings])
+
+
+print(common_characters_one_line(example_strings))
