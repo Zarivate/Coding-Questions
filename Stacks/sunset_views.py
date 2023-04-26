@@ -30,7 +30,113 @@ sample_direction2 = "WEST"
 # O(n) space
 # n = length of input array
 
-# Explanation:
+# Explanation: Stack version
+
+# The main idea to keep in mind is that a Stack's LIFO/FILO property can be used to get the correct buildings. What's
+# important to realize is that because buildings can only see the sunset if their heights are greater than all the ones
+# following it, if you iterate in the proper direction the sun is pointing at, and add the buildings accordingly,
+# you can compare the following building heights to the ones on the stack and keep popping off buildings until you only
+# have ones with heights greater than or equal to the current building's height. Ensuring that the only buildings in
+# the stack are those able to see the sunset. Though in the event that you need to start at the end of the array if
+# pointing WEST, will need to reverse the array before returning the results. IE:
+
+# sample_buildings = [3, 5, 4, 4, 3, 1, 3, 2]
+# sample_direction = "EAST"
+
+# Initialize an empty stack that will hold the answers.
+# answers = []
+# Then just iterate through the array and compare the current buildings height with the max, are two possibilities.
+# If you find that
+# the current building has a height greater than or equal to the height of the building at the top of the stack,
+# pop the top building off the stack and keep popping until find a building with a greater height or until stack
+# is empty. After that, add it to the stack.
+# If you find that
+# the current building has a height less than the height of the building at the top of the stack, add to stack. Don't
+# pop anything.
+
+# In depth example:
+
+# stack = []
+# sample_buildings[0] = 3
+# Top of stack is empty so can just add since 3 > 0
+# stack = [0]
+# sample_buildings[1] = 5
+# 5 > 3, so pop 3 off stack and add 5
+# stack = [1]
+# sample_buildings[2] = 4
+# 5 > 4, less than so add to stack.
+# stack = [1, 2]
+# sample_buildings[3] = 4
+# 4 = 4, equal to so pop off stack,
+# stack = [1]
+# 5 > 4, less than so add to stack,
+# stack = [1, 3]
+# sample_buildings[4] = 3
+# 4 > 3, less than so add to stack,
+# stack = [1, 3, 4]
+# sample_buildings[5] = 1
+# 3 > 1, less than so add to stack,
+# stack = [1, 3, 4, 5]
+# sample_buildings[6] = 3
+# 1 < 3, greater than top of stack so pop
+# stack = [1, 3, 4]
+# 3 = 3, equal to so pop off stack,
+# stack = [1, 3]
+# 4 > 3, less than so add to stack,
+# stack = [1, 3, 6]
+# sample_buildings[7] = 2
+# 3 > 2, less than so add to stack,
+# stack = [1, 3, 6, 7]
+# Return stack, if direction is opposite one will just need to reverse stack which would be an O(n) operation
+
+# Time Complexity breaks down like so:
+# Time:
+# O(n) to iterate through array
+# O(n), in worst case will have to pop n elements off the stack each time
+# O(n) again to reverse stack, if in opposite direction to get correct order of results
+
+# Space:
+# O(n), at most will only have n elements in stack
+
+# Implementation:
+def sunset_views_stack(buildings, direction):
+    # Stack to hold answers
+    answers = []
+
+    # Depending on the direction, the starting index is adjusted
+    index = 0 if direction == "EAST" else len(buildings) - 1
+    # Depending on the direction again, the value to increment through the array with is different
+    step = 1 if direction == "EAST" else -1
+
+    # While loop to iterate through array
+    while 0 <= index < len(buildings):
+        # Set value to hold the current buildings height
+        current_building_height = buildings[index]
+
+        # While loop to continue so long as stack isn't empty and the height of the building at the top of the stack
+        # is less than the current buildings height
+        while len(answers) > 0 and buildings[answers[-1]] <= current_building_height:
+            # Pop top value off stack
+            answers.pop()
+
+        # Add building index to stack
+        answers.append(index)
+
+        # Iterate through array
+        index += step
+
+    # If the direction is WEST, reverse the stack before returning it
+    if direction == "WEST":
+        return answers[::-1]
+
+    return answers
+
+
+print(sunset_views_stack(sample_buildings, sample_direction))
+print(sunset_views_stack(sample_buildings2, sample_direction2))
+
+
+# Bonus Explanation: Non-stack version
 # This is a case where there are various best case solutions, for now the non stack will be explained.
 # Essentially what's important to keep in mind if not using a stack for the solution is how the maximum height of the
 # buildings in the path of the current building is what determines whether it can see the sunset or not. Using this
@@ -91,32 +197,36 @@ sample_direction2 = "WEST"
 
 # Implementation:
 def sunset_views_no_stack(buildings, direction):
+    # Set up an array to hold the return results
     answers = []
 
-    start = 0 if direction == "WEST" else len(buildings) - 1
+    # Set the starting index to either be at the start or end of the array depending on the direction
+    index = 0 if direction == "WEST" else len(buildings) - 1
+    # Value to decide whether to move forward or backwards in the array depending on the direction
     step = 1 if direction == "WEST" else -1
 
-    index = start
+    # Max height variable to be compared to buildings later, set to 0 as no buildings with 0 or negative height
     max_height = 0
+    # While loop to iterate through the array, either till end or start of array depending on direction
     while 0 <= index < len(buildings):
+        # Set the current height to be equal to the current building height
         current_height = buildings[index]
 
+        # Compare to max height, if greater, then add to answer array and set the max height to be equal to it
         if current_height > max_height:
             answers.append(index)
+            max_height = current_height
 
-        max_height = max(current_height, max_height)
-
+        # Adjust the index in the array
         index += step
 
+    # In the event that the direction is east and the answers are in reverse, simply reverse the array
     if direction == "EAST":
         return answers[::-1]
 
+    # Return results
     return answers
 
 
 print(sunset_views_no_stack(sample_buildings, sample_direction))
 print(sunset_views_no_stack(sample_buildings2, sample_direction2))
-
-# Explanation: Stack version
-
-# For the answer that utilizes a stack
