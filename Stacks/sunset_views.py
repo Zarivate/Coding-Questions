@@ -1,3 +1,4 @@
+from tkinter import *
 # Question:
 
 # Given an array of buildings and the direction they're facing, return an array of the indices of the buildings that
@@ -230,3 +231,10 @@ def sunset_views_no_stack(buildings, direction):
 
 print(sunset_views_no_stack(sample_buildings, sample_direction))
 print(sunset_views_no_stack(sample_buildings2, sample_direction2))
+
+# Visual example of problem
+window = Tk()
+example_image = PhotoImage(file='sunset_views_example.png')
+example_label = Label(image=example_image)
+example_label.pack()
+window.mainloop()
