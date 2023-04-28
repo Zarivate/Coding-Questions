@@ -12,6 +12,7 @@
 # Example:
 sample_words = ["smug", "test", "gums", "abc", "cba"]
 
+
 # Answer:
 # [["smug", "gums", ], ["abc", "cba"]]
 
@@ -20,6 +21,11 @@ sample_words = ["smug", "test", "gums", "abc", "cba"]
 # O(n * m) space (n is from number of words added to Set, m is from upper bound of space needed for longest word)
 # n = number of words
 # m = length of the longest word
+
+# **********************************************************
+# Because length of words not limited to something like the letters of the English alphabet and can be of any size
+# and use any sort of characters, can't reduce time and space complexity to O(n).
+# **********************************************************
 
 # Explanation:
 # The main idea to realize here is, when comparing words, there is only ever 1 possible combination of the reverse of a
@@ -44,3 +50,49 @@ sample_words = ["smug", "test", "gums", "abc", "cba"]
 # Reach end of words so can return answer array
 
 # Implementation:
+def semordnilap(words):
+    # Create a set from the given words
+    set_words = set(words)
+    # Create an array to hold future pairs
+    answers = []
+
+    # Iterate through the words
+    for word in words:
+        # Reverse each word and hold within a variable to compare for later
+        reverse = word[::-1]
+        # Check to see if the reverse exists within the Set and that the reverse isn't the same as the normal word,
+        # since that would just be a palindrome, not a semordnilap
+        if reverse in set_words and reverse != word:
+            # Add pair to answer array
+            answers.append([word, reverse])
+            # Remove the pair from the Set
+            set_words.remove(word)
+            set_words.remove(reverse)
+
+    return answers
+
+
+print(semordnilap(sample_words))
+
+
+# Bonus slightly cleaner version: No need to remove from Set or initially populate it.
+def semordnilap_cleaner(words):
+    # Initialize a set
+    words_set = set([])
+    # Create answer array
+    answers = []
+    # Iterate through array
+    for word in words:
+        # Reverse the word and store it within a variable
+        reverse = word[::-1]
+        # Check if reverse word exists in set
+        if reverse in words_set:
+            # If so, add pair to answers array
+            answers.append([word, reverse])
+        # Else if word doesn't exist in Set yet, just add it to the Set
+        words_set.add(word)
+
+    return answers
+
+
+print(semordnilap_cleaner(sample_words))
