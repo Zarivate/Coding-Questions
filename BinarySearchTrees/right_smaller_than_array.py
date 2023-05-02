@@ -9,10 +9,6 @@ from tkinter import *
 # Example:
 
 example_array = [8, 5, 11, -1, 3, 4, 2]
-# This excludes the last value (2), since that was already used as a node before this point
-for i in reversed(range((len(example_array) - 1))):
-    print(example_array[i])
-
 
 # Answer
 # [5, 4, 4, 0, 1, 1, 0]
@@ -177,7 +173,7 @@ for i in reversed(range((len(example_array) - 1))):
 
 
 # Implementation:
-def rightSmallerThan(array):
+def right_smaller_than(array):
     # Check for edge case where input array is empty
     if len(array) == 0:
         # If so just return an empty array
@@ -189,15 +185,19 @@ def rightSmallerThan(array):
     last_idx = len(array) - 1
     # Create the BST using the last value in the array as the root node
     bst_root = BST(array[last_idx])
+    # Set the last index in the answers array to be 0, since skip over its answer when filling out the rest of the BST.
     answers[last_idx] = 0
-    # This is an O(n) operation, to iterate through each value in the array
+    # This is an O(n) operation, to iterate through each value in the array. Would skip over the last value as well
+    # which is why the root was created separately.
     for i in reversed(range(len(array) - 1)):
         # This is an O(log(n) operation at each node to insert, meaning would have an O(n(log(n) time complexity here
         bst_root.insert(array[i], i, answers)
 
+    # Return answer array
     return answers
 
 
+# Class implementation of BST with special properties to hold the current size of a node's left subtree
 class BST:
     def __init__(self, value):
         self.value = value
@@ -205,20 +205,42 @@ class BST:
         self.left = None
         self.right = None
 
+    # Insert method that takes in the current value, it's corresponding index, and the answer array
     def insert(self, value, idx, answers, num_smaller_at_insert_time=0):
+        # If the value to be inserted is less than the current one it is at, will be added to that node's left subtree
         if value < self.value:
+            # Increase the left subtree size property by 1
             self.left_size += 1
+            # If the left subtree of the current node is empty
             if self.left is None:
+                # Create a new node in the current node's left subtree
                 self.left = BST(value)
+                # Set the corresponding position in the answer array to be equal to however many nodes are currently
+                # smaller than it at the time of insertion.
                 answers[idx] = num_smaller_at_insert_time
+            # Else if the left subtree isn't empty
             else:
+                # Perform another insert operation on the left subtree node
                 self.left.insert(value, idx, answers, num_smaller_at_insert_time)
+        # Else if the passed in value is equal to the current node
         else:
+            # Means can increment by 1 how many current nodes there are smaller than it by the current node's left side
             num_smaller_at_insert_time += self.left_size
+            # Because the right side of a BST can be either equal to or greater than the current node, another if
+            # check to see if the passed in value is indeed greater than the current node value.
             if value > self.value:
+                # If so, means there is 1 more node that the current value is greater than so can increment it by 1
                 num_smaller_at_insert_time += 1
+            # Now t insert the value, if the right side of the current node is empty
             if self.right is None:
+                # Create a new BST node to the right of the current using the passed in value
                 self.right = BST(value)
+                # Update the corresponding index in the answer array
                 answers[idx] = num_smaller_at_insert_time
+            # Else if the right subtree isn't empty
             else:
+                # Call the insert method again on the right subtree
                 self.right.insert(value, idx, answers, num_smaller_at_insert_time)
+
+
+print(right_smaller_than(example_array))
