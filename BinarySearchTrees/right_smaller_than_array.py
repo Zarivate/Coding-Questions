@@ -244,3 +244,10 @@ class BST:
 
 
 print(right_smaller_than(example_array))
+
+# Finished BST would look like so
+window = Tk()
+example_image = PhotoImage(file='right_smaller_than_bst_example.png')
+example_label = Label(image=example_image)
+example_label.pack()
+window.mainloop()
