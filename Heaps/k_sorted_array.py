@@ -9,7 +9,7 @@
 
 # Example:
 example_k_array = [3, 2, 1, 5, 4, 7, 6, 5]
-k = 3
+example_k = 3
 
 # The array is a k array because at most, any given element in the array is at worst 3 positions away from where they
 # should be. IE: The 3 in the example is 2 positions away from its proper place, the 2 is in the right place or 0
@@ -24,7 +24,6 @@ k = 3
 # O(k) space
 # n = number of elements in the array
 # k = distance of elements from their correct positions
-
 
 
 # Explanation:
@@ -123,8 +122,8 @@ k = 3
 
 
 # Lot of overlap pretty much, this can be avoided however with a Min-heap implementation.
-# This is due to a Min-heaps property of always having its children nodes be greater than it's parent node, meaning it
-# would have a min-max tree like structure. With the root element being the smallest element.
+# This is due to a Min-heaps property of always having its children nodes be greater than or equal to it's parent node,
+# meaning it would have a min-max tree like structure. With the root element being the smallest element.
 
 # Time complexities to keep in mind for min-heap
 
@@ -148,7 +147,7 @@ k = 3
 # has already been sorted alongside a heap that will be initialized to the current k+1 number of elements. IE:
 
 # array = [3, 2, 1, 5, 4, 7, 6, 5]
-# index = 0
+# current_index = 0
 # heap =                1 ---> 2
 #          5 <--- 3 <--
 # ********************Special case**********************************************************************
@@ -157,5 +156,165 @@ k = 3
 
 # Use some sort of loop to begin looping at k + 1 elements, IE:
 # 3 + 1 = 4, array[4] = 4
-# [3, 2, 1, 5, 4(start loop here), 7, 6, 5]
+#
 
+# Now place the top of the heap at the current index, 0. Will know it's where it belongs because it's the minimum of
+# the current k + 1 elements.
+# heap_root = 1,
+# array = [1, 2, 1, 5, 4, 7, 6, 5]
+# Adjust heap
+# heap =  5 <--- 3 <-- 2
+# Update index
+# current_index = 1
+# Add current loop position element to array,
+# array[4] = 4
+# heap =  4 <--- 3 <--- 2 ---> 5
+# Done with first loop
+
+# Repeat
+# Update for loop to continue onto next element,
+# [1, 2, 1, 5, 4, 7(loop here), 6, 5]
+# current_index = 1
+# heap =  4 <--- 3 <--- 2(root) ---> 5
+# Add heap root to index position
+# array = [1, 2, 1, 5, 4, 7, 6, 5]
+# Update heap by changing root
+# heap =  4 <--- 3(root) ---> 5
+# Update index
+# current_index = 2
+# Add current loop position element to array,
+# array[5] = 7
+# heap = 7 <--- 4 <--- 3(root) ---> 5
+
+# Update for loop to continue onto next element,
+# [1, 2, 1, 5, 4, 7, 6(loop here), 5]
+# current_index = 2
+# heap = 7 <--- 4 <--- 3(root) ---> 5
+# Add heap root to index position
+# array = [1, 2, 3, 5, 4, 7, 6, 5]
+# Update heap by changing root
+# heap = 7 <--- 4 (root) ---> 5
+# Update index
+# current_index = 3
+# Add current loop position element to array,
+# array[6] = 6
+# heap = 7 <--- 6 <--- 4 (root) ---> 5
+
+# Update for loop to continue onto next element,
+# [1, 2, 3, 5, 4, 7, 6, 5(loop here)]
+# current_index = 3
+# heap = 7 <--- 6 <--- 4 (root) ---> 5
+# Add heap root to index position
+# array = [1, 2, 3, 4, 4, 7, 6, 5]
+# Update heap by changing root
+# heap = 6 <--- 5 (root) ---> 7
+# Update index
+# current_index = 4
+# Add current loop position element to array,
+# array[7] = 5
+# heap = 6 <--- 5 <--- 5(root) ---> 7
+
+# Update for loop to continue onto next element,
+# ********************Special case**********************************************************************
+# [1, 2, 3, 4, 4, 7, 6, 5](loop here) Is outside of array, so no longer need to add any elements to the heap. Can just
+# add heap elements into the current index position.
+# ********************Special case**********************************************************************
+# current_index = 4
+# heap = 6 <--- 5 <--- 5(root) ---> 7
+# Add heap root to index position
+# array = [1, 2, 3, 4, 5, 7, 6, 5]
+# Update heap by changing root
+# heap = 6 <--- 5 (root) ---> 7
+# Update index
+# current_index = 5
+
+# current_index = 5
+# array = [1, 2, 3, 4, 5, 7, 6, 5]
+# heap = 6 <--- 5 (root) ---> 7
+# Add heap root to current index
+# array = [1, 2, 3, 4, 5, 5, 6, 5]
+# Update heap
+# heap = 6(root) ---> 7
+# Update index
+# current_index = 6
+
+# current_index = 6
+# array = [1, 2, 3, 4, 5, 5, 6, 5]
+# heap = 6(root) ---> 7
+# Add heap root to current index
+# array = [1, 2, 3, 4, 5, 5, 6, 5]
+# Update heap,
+# heap = 7 (root)
+# Update index
+# current_index = 7
+
+# current_index = 7
+# array = [1, 2, 3, 4, 5, 5, 6, 5]
+# heap = 7 (root)
+# Add heap root to current index
+# array = [1, 2, 3, 4, 5, 5, 6, 7]
+# Update heap
+# heap = None/null
+
+# Finished
+
+
+# Time Complexity breakdown:
+
+# Space
+# O(k)
+# Since sorting in place only extra space used is in heap, which at most will have k + 1 elements which can be reduced
+# to k.
+
+# Time
+# O(n(log(k))
+# n = number of elements in array
+
+# n is from looping through input array at least once
+
+# log(k) from removing from heap at each element since at most only ever k+1 elements in heap that reduces to k
+# log(k) from adding element to heap at each element
+# Can be seen as doing 2(log(k)) operations at each n that reduces to just log(k)
+
+# k from initializing heap, but can be reduced from overall complexity due to how k is always less than or equal to n.
+# This wouldn't change anything because of how the heap would still at most be n (all of them) elements.
+# Meaning there could be a chance for k to be equal to n, that would transform possible time complexity to
+# O(n(log(k)) + k) ---> O(n(log(k)) + n) ---> O(n(log(k)) + 1) ---> O(n(log(k))
+
+
+# Implementation:
+import heapq
+
+
+def sortKSortedArray(array, k):
+    idx_to_sort = 0
+
+    # Because passed in k value could be equal to the size of the array, resulting in it going out of bound with
+    # k + 1, a heap is made from the array stretching from whichever is smaller. k + 1 or the length of the array.
+    # This is really more the size of the heap being made than the heap itself, however.
+    heap = array[: min(k + 1, len(array))]
+
+    # Transform the heap variable into an actual heap, happens in linear time
+    heapq.heapify(heap)
+
+    # For loop to go from the start of k + 1 in the array till the end
+    for idx in range(k + 1, len(array)):
+        # Set the index to sort in the array to be equal to the top of the heap/root.
+        array[idx_to_sort] = heapq.heappop(heap)
+        # Increment the index to sort by 1
+        idx_to_sort += 1
+        # Add the current k + 1 element to the heap
+        heapq.heappush(heap, array[idx])
+
+    # Once finished with the for loop, means have reached the end of the array and whatever elements are left
+    # in the heap can just be placed in order in the array. Will continue until heap is emptied of elements.
+    while len(heap) > 0:
+        # # Set the index to sort in the array to be equal to the top of the heap/root.
+        array[idx_to_sort] = heapq.heappop(heap)
+        # Increment the index to sort by 1
+        idx_to_sort += 1
+
+    return array
+
+
+print(sortKSortedArray(example_k_array, example_k))
