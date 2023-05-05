@@ -1,3 +1,4 @@
+from tkinter import *
 # Question
 
 # Write a function that takes in a non-negative integer "k" and a "k-sorted" array of integers and returns the sorted
@@ -122,7 +123,7 @@ example_k = 3
 
 
 # Lot of overlap pretty much, this can be avoided however with a Min-heap implementation.
-# This is due to a Min-heaps property of always having its children nodes be greater than or equal to it's parent node,
+# This is due to a Min-heaps property of always having its children nodes be greater than or equal to its parent node,
 # meaning it would have a min-max tree like structure. With the root element being the smallest element.
 
 # Time complexities to keep in mind for min-heap
@@ -318,3 +319,10 @@ def sortKSortedArray(array, k):
 
 
 print(sortKSortedArray(example_k_array, example_k))
+
+# Visual of heap at each iteration
+window = Tk()
+example_image = PhotoImage(file='k_sort_array_visual.png')
+example_label = Label(image=example_image)
+example_label.pack()
+window.mainloop()
