@@ -1,3 +1,4 @@
+from tkinter import *
 # Question:
 
 # Given the head of a singly linked list that has a loop, a tail points to some node in the linked list
@@ -100,14 +101,16 @@ LL1.next.next.next.next.next.next = LL1.next.next
 #                   ---------------------|
 
 # Because the remainder, R, if traversed will get us to the looping node, and we know that R = D and that D can be 
-# traveresed by starting at the head and just iterating like normal, we just need to iterate from the start again till
+# traversed by starting at the head and just iterating like normal, we just need to iterate from the start again till
 # the nodes match again.
 
 
-# Reset the first pointer, F, to the head of the linked list and iterate both pointers like normal till meet up again. IE:
+# Reset the first pointer, F, to the head of the linked list and iterate both pointers like normal till meet up again.
+# IE:
+
 # LL1 = 0(F) --> 1 --> 2 --> 3 --> 4(S) --> 5 --
-#                   ^                          |
-#                   ---------------------------|
+#                      ^                       |
+#                      ------------------------|
 
 # LL1 = 0 --> 1(F) --> 2 --> 3 --> 4 --> 5(S) --
 #                      ^                       |
@@ -143,3 +146,10 @@ def findLoop(head):
 
 
 print(findLoop(LL1).value)
+
+# Visual example of problem alongside answer
+window = Tk()
+example_image = PhotoImage(file='find_loop_visual.png')
+example_label = Label(image=example_image)
+example_label.pack()
+window.mainloop()
