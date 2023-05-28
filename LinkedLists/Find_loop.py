@@ -52,7 +52,7 @@ LL1.next.next.next.next.next.next = LL1.next.next
 
 
 # Explanation:
-# Through the power of pointers and big maths, this solution is done rather simply. Least in concept anyways...
+# Through the power of pointers and big maths, this solution is done rather simply. Least in concept anyway...
 # the main thing to realize is how, because we know for a fact there is a loop in the Linked list, we can
 # use that to calculate the distance to the node where the loop originates. IE:
 
@@ -62,7 +62,7 @@ LL1.next.next.next.next.next.next = LL1.next.next
 
 # F = first pointer
 # S = second pointer
-# TODO, add visual example of path both pointers too kere 
+
 
 # In the example created near the top, both nodes will converge at the 4 node, the paths both travel to get to the node
 # differ but can be split up like so.
