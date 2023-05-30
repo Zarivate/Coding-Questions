@@ -5,5 +5,30 @@
 # target given the coins provided.
 
 # Note:
-# An unlimited amount of each type of coin is provided
+# Each coin at your disposal has an unlimited amount of uses
+
+# Example
+n = 6
+example_coins = [1, 5]
+
+# Answer:
+# 2, 1 penny and 1 nickel make 1 + 5 = 6 is one solution, and 6 pennies is the other
+
+
+# Optimal Space & Time Complexity:
+# O(nd) time || O(n) space
+# n = target value
+# d = number of types of coin
+
+
+# Explanation:
+#
+
+
+
+
+
+
+# Implementation:
+
 
