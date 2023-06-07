@@ -98,7 +98,7 @@ example_coins2 = [1, 5, 10, 25]
 # Time:
 # O(nd)
 # O(n) from iterating through the array
-# O(d) from each type of coin needing it's own iteration through the array
+# O(d) from each type of coin needing its own iteration through the array
 # O(nd) when put together
 
 
