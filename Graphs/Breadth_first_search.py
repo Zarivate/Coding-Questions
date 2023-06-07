@@ -25,7 +25,6 @@ example_graph.children[2].addChild("G").addChild("H")
 example_graph.children[0].children[1].addChild("I").addChild("J")
 example_graph.children[2].children[0].addChild("K")
 
-
 # Answer:
 
 # ["A", "B", "C", "D", "E", "F", "G", "H", "J", "K"]
@@ -128,6 +127,7 @@ def breadth_first_search(self, array):
             # Append the child to the queue
             queue.append(child)
 
+    # Return array that should now be correctly filled with node names
     return array
 
 
