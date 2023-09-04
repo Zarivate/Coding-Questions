@@ -23,7 +23,14 @@ link_2 = LinkedList(2)
 link_2.next = LinkedList(1)
 link_2.next.next = LinkedList(5)
 
-# Answer:
+# Answer: (5485)
+link_3 = LinkedList(5) # This head node would be what is returned
+link_3.next = LinkedList(4)
+link_3.next.next = LinkedList(8)
+link_3.next.next.next = LinkedList(5)
+
+
+# Explanation:
 
 
 
