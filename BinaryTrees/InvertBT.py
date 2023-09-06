@@ -5,12 +5,33 @@
 
 
 # Example:
+class BinaryTree:
+    def __init__(self, value, left=None, right=None):
+        self.value = value
+        self.left = left
+        self.right = right
 
-# Tree1 =   1
+
+# Tree =   1
 #         2   3
-#       4 5  6 7
-#     8 9
+#      4 5    6 7
+#    8 9
 #
+
+# Visual example at end of program
+example_tree = BinaryTree(-1)
+# Right side of tree
+example_tree.right = BinaryTree(3)
+example_tree.right.left = BinaryTree(6)
+example_tree.right.right = BinaryTree(7)
+
+# Left side of tree
+example_tree.left = BinaryTree(2)
+example_tree.left.right = BinaryTree(5)
+example_tree.left.left = BinaryTree(4)
+example_tree.left.left.left = BinaryTree(8)
+example_tree.left.left.right = BinaryTree(9)
+
 
 
 
@@ -46,6 +67,14 @@
 
 
 
+# Bonus most optimal and clean solution:
+def invertBT(tree):
+    if tree is None:
+            return
+    else:
+         invertBT(tree.left)
+         invertBT(tree.right)
+         tree.left, tree.right = tree.right, tree.left
 
 
 
