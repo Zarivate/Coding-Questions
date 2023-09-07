@@ -57,11 +57,17 @@ example_tree.left.left.right = BinaryTree(9)
 # complexity being O(d). For the time complexity it's O(n) due to having to at some point traverse each and every node.
 
 # Optimal Solution:
+def invertBTSimple(treeNode):
+     if treeNode is None:
+          return
+     else:
+          swapNodes(treeNode)
+          invertBTSimple(treeNode.left)
+          invertBTSimple(treeNode.right)
 
 
-
-
-
+def swapNodes(node):
+     node.left, node.right = node.right, node.left
 
 
 
@@ -80,7 +86,19 @@ def invertBT(tree):
 
 
 
-# Bonus unoptimal solution
+# Bonus unoptimal solution. This solution involves the use of a queue that goes through each node individually. Doing so would result
+# in the same time but a bit more space of O(n), as there would need to be a queue the size of however many nodes there are.
+def invertBTUnoptimal(tree):
+     queue = [tree]
+     while len(queue):
+          # Get the top node from the queue
+          currentNode = queue.pop(0)
+          if currentNode is None:
+               return
+          swapNodesUnoptimal(currentNode)
+
+def swapNodesUnoptimal(node):
+     node.left, node.right = node.right, node.left
 
 
 
