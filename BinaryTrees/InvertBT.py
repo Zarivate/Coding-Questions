@@ -6,20 +6,20 @@
 
 # Example:
 class BinaryTree:
-    def __init__(self, value, left=None, right=None):
+    def __init__(self, value):
         self.value = value
-        self.left = left
-        self.right = right
+        self.left = None
+        self.right = None
 
 
 # Tree =   1
-#         2   3
-#      4 5    6 7
+#        2   3
+#      4 5   6 7
 #    8 9
 #
 
 # Visual example at end of program
-example_tree = BinaryTree(-1)
+example_tree = BinaryTree(1)
 # Right side of tree
 example_tree.right = BinaryTree(3)
 example_tree.right.left = BinaryTree(6)
@@ -33,12 +33,10 @@ example_tree.left.left.left = BinaryTree(8)
 example_tree.left.left.right = BinaryTree(9)
 
 
-
-
 # Result:
 #       1
 #     3   2
-#  7  8   5  4
+#  7  6   5  4
 #            9 8
 
 # Notes:
@@ -56,14 +54,24 @@ example_tree.left.left.right = BinaryTree(9)
 # Doing so would result in the longest call in the call stack being equal to the depth of the BT, which would explain the space
 # complexity being O(d). For the time complexity it's O(n) due to having to at some point traverse each and every node.
 
+
+# Function to handle printing out the nodes of the tree, in DFS, will be used to showcase whether the trees were really reversed or not
+def traverseTree(tree):
+    if tree is None:
+        return
+    print(tree.value)
+    traverseTree(tree.left)
+    traverseTree(tree.right)
+
+
 # Optimal Solution:
 def invertBTSimple(treeNode):
      if treeNode is None:
-          return
+        return
      else:
-          swapNodes(treeNode)
-          invertBTSimple(treeNode.left)
-          invertBTSimple(treeNode.right)
+        swapNodes(treeNode)
+        invertBTSimple(treeNode.left)
+        invertBTSimple(treeNode.right)
 
 
 def swapNodes(node):
@@ -71,19 +79,21 @@ def swapNodes(node):
 
 
 
-
-
-# Bonus most optimal and clean solution:
+# Bonus just as optimal but slightly cleaner solution:
 def invertBT(tree):
     if tree is None:
-            return
-    else:
-         invertBT(tree.left)
-         invertBT(tree.right)
-         tree.left, tree.right = tree.right, tree.left
+        return
+    invertBT(tree.left)
+    invertBT(tree.right)
+    tree.left, tree.right = tree.right, tree.left
 
 
 
+print("\nThe tree before invertion is\n")
+traverseTree(example_tree)
+invertBT(example_tree)
+print("\nThe tree after invertion is\n")
+traverseTree(example_tree)
 
 
 # Bonus unoptimal solution. This solution involves the use of a queue that goes through each node individually. Doing so would result
@@ -99,12 +109,3 @@ def invertBTUnoptimal(tree):
 
 def swapNodesUnoptimal(node):
      node.left, node.right = node.right, node.left
-
-
-
-
-
-
-
-
-
