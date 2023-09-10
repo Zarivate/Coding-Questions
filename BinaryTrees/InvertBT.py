@@ -1,3 +1,4 @@
+from tkinter import *
 # Question:
 
 # Write a function that takes in a BT and inverts it. IE: The funtion should swap every left node in the tree
@@ -109,3 +110,11 @@ def invertBTUnoptimal(tree):
 
 def swapNodesUnoptimal(node):
      node.left, node.right = node.right, node.left
+
+
+window = Tk()
+example_image = PhotoImage(file='BinaryTrees\InvertBTExampleVisual.png')
+resized_image = example_image.resize((600, 600))
+example_label = Label(image=resized_image)
+example_label.pack()
+window.mainloop()

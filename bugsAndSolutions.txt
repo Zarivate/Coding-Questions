@@ -1,0 +1,7 @@
+1. (venv) "bug"
+    - Not really a bug so much as an idiot moment, but sometimes this project will open in a virtual environment state
+      which, while works, is not how this project started and thus results in various missing packages and errors.
+
+    Solution:
+    - Ctrl + Shift + p
+    - Select the interpretor that comes with default Python installation, not one located in venv -> Scripts
