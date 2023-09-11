@@ -1,3 +1,13 @@
+import sys
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+resizePath = os.getenv("RESIZEPATH")
+
+sys.path.insert(1, resizePath)
+from resizeImg import *
+
 # Question:
 
 # Given a node class that has a name and an array of optional children nodes, implement a Breadth First Search (BFS)
@@ -16,14 +26,17 @@ class Node:
         self.children.append(Node(name))
         return self
     
-# The code below should create a graph that looks like so    
-# TODO: Implement visual example here    
+# The code below should create a graph that looks like so        
 example_graph = Node("A")
 example_graph.addChild("B").addChild("C").addChild("D")
 example_graph.children[0].addChild("E").addChild("F")
 example_graph.children[2].addChild("G").addChild("H")
 example_graph.children[0].children[1].addChild("I").addChild("J")
 example_graph.children[2].children[0].addChild("K")
+
+# Visual of problem
+img_path = "Graphs\BFSGraphVisual.png"
+imgResizeHalf(img_path, "Original")
 
 # Answer:
 
@@ -37,9 +50,6 @@ example_graph.children[2].children[0].addChild("K")
 # To fill the input array all you would need to do is append to the array the name of every node as they're being
 # popped off the queue. IE:
 
-# TODO: Implement visual showing popping off a node, adding it to a queue, then popping it off the queue, appending
-# it's name to the input array, then appending it's children node's to the queue. Essentially make visual of first
-# example in notebook
 
 
 # Queue = [A], set Queue to be equal to the head of the graph at the start
@@ -101,13 +111,16 @@ example_graph.children[2].children[0].addChild("K")
 
 # Breakdown:
 # O(v + e) time
-# O(v) from eventually having to traverse every node
+# O(v) from eventually having to traverse every node and append them to the queue/array
 # O(e) from having to loop through every child node, where the number of children nodes is dependent on the # of edges a node has
 
 # O(v) space
-# O(v) from the worst case being where graph is just 1 level below head node. Meaning the queue will be of size v-1, which rounds
-# down to just v. IE:
-# TODO: Add visual example of worst case scenario graph
+# O(v) from the worst case being where graph is just 1 level below head node. Meaning the queue will be of size v-1, in other words
+# the queue would hold every node besides the starting node, which rounds down to just v. IE:
+
+# Visual of worst case scenario
+img_path = "Graphs\BFSGraphVisual2.png"
+imgResizeHalf(img_path, "Worst Case Scenario")
 
 
 # Implementation:

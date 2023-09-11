@@ -1,6 +1,13 @@
-from tkinter import *
-# Question:
+import sys
+import os
+from dotenv import load_dotenv
 
+load_dotenv()
+resizePath = os.getenv("RESIZEPATH")
+
+sys.path.insert(1, resizePath)
+from resizeImg import *
+# Question:
 # Write a function that takes in a BT and inverts it. IE: The funtion should swap every left node in the tree
 # for it's corresponding right node. 
 
@@ -112,9 +119,5 @@ def swapNodesUnoptimal(node):
      node.left, node.right = node.right, node.left
 
 
-window = Tk()
-example_image = PhotoImage(file='BinaryTrees\InvertBTExampleVisual.png')
-resized_image = example_image.resize((600, 600))
-example_label = Label(image=resized_image)
-example_label.pack()
-window.mainloop()
+img_path = "BinaryTrees\InvertBTExampleVisual.png"
+imgResizeHalf(img_path, "Original")
