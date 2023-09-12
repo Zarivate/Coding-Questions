@@ -192,20 +192,118 @@ printOutArray(newArray)
 #                (F,S)                        T
 # F = 0
 # S = 0
-# T = -1
+# T = 8
 # firstVal = 0
 # secVal = 1
 
+# Because secIdx represents the middle values, and thus the middle positions in the array, changes in the array are made depending
+# on whatever value secIdx has, 
 # Check to see if the value at S matches up with any of the order values
-# S matches with firstVal
-# Swap their values, both are 0 so won't change anything though
+# S = array[0] = 0, S matches up with firstVal so swap
+# Swap their values, both are at same position though so won't change anything
 # example_array = [0, 1, 1, -1, -1, 0, 1, 0, -1]
 # Increment both the first and second indexes
 # F = 1
 # S = 1
+# T = 8
+# Continue
+
+# example_array = [0, 1, 1, -1, -1, 0, 1, 0, -1]
+#                   (F,S)                     T
+# F = 1
+# S = 1
+# T = 8
+# firstVal = 0
+# secVal = 1
+# S = array[1] = 1, matches up with secVal, far as we know this is where it should go for now so just iterate secIdx
+# example_array = [0, 1, 1, -1, -1, 0, 1, 0, -1]
+# F = 1
+# S = 2
+# T = 8
+# Continue
+
+# example_array = [0, 1, 1, -1, -1, 0, 1, 0, -1]
+#                     F  S                    T
+# F = 1
+# S = 2
+# T = 8
+# firstVal = 0
+# secVal = 1
+# S, array[2] = 1, matches up with secValue so just update the secIdx again and continue
+# example_array = [0, 1, 1, -1, -1, 0, 1, 0, -1]
+# F = 1
+# S = 3
+# T = 8
+# Continue
+
+# ****************************************************************************************************************
+# example_array = [0, 1, 1, -1, -1, 0, 1, 0, -1]
+#                     F      S                T
+# S = 3, array[3] = -1, matches with neither first or secVal so means must be third value in order array.
+# Swap the values in positions S and T then, both are -1 though so will look the same
+# example_array = [0, 1, 1, -1, -1, 0, 1, 0, -1]
+# Decrement T position
+# T = 7
+# Continue
+# ****************************************************************************************************************
 
 
+# ****************************************************************************************************************
+# example_array = [0, 1, 1, -1, -1, 0, 1, 0, -1]
+#                     F      S            T
+# S = 3, array[3] = -1, matches with neither first or secVal so means must be third value in order array.
+# Swap the values in positions S and T then
+# example_array = [0, 1, 1, 0, -1, 0, 1, -1, -1]
+# Decrement T position
+# T = 6
+# Continue
+# ****************************************************************************************************************
 
+# example_array = [0, 1, 1, 0, -1, 0, 1, -1, -1]
+#                     F     S         T
+# S = 3, array[3] = 0, matches with firstVal so swap their position values and increment both firstIdx and secIdx
+# example_array = [0, 0, 1, 1, -1, 0, 1, -1, -1]
+#                        F      S     T
+# F = 2
+# S = 4
+# T = 6
+# Continue
+
+# example_array = [0, 0, 1, 1, -1, 0, 1, -1, -1]
+#                        F      S     T
+# S = 4, array[4] = -1, matches with third value so swap position values with T and decrement T
+# example_array = [0, 0, 1, 1, 1, 0, -1, -1, -1]
+#                        F     S  T
+# F = 2
+# S = 4
+# T = 5
+# Continue
+
+# example_array = [0, 0, 1, 1, 1, 0, -1, -1, -1]
+#                        F     S  T
+# S = 4, array[4] = 1, matched with secVal so just increment S
+# example_array = [0, 0, 1, 1, 1, 0, -1, -1, -1]
+#                        F        T
+#                                 S
+# F = 2
+# S = 5
+# T = 5
+# Continue
+
+# example_array = [0, 0, 1, 1, 1, 0, -1, -1, -1]
+#                        F        T
+#                                 S
+# S = 5, array[5] = 0, matches with firstVal so swap with F and incrment both F and S
+# example_array = [0, 0, 0, 1, 1, 1, -1, -1, -1]
+#                           F     T   S
+# F = 3
+# S = 6
+# T = 5
+# S > T, meaning the middle position has overtaken the last position and we can finish and return array
+
+
+# Implementation:
+# O(n) time | O(1) space
 def threeNumSortOneIteration(array, order):
     # Grab the first two values in the order array
     firstVal = order[0]
