@@ -79,7 +79,53 @@ def printOutArray(array):
 # sorted_array = [2, 3, 5, 5, 6, 8, 9]
 
 # This approach runs in 
-# O(nlog(n)) space and time which is not ideal space wise, which is why the optimal approach is a bit trickier
+# O(nlog(n)) space and time which is not ideal space wise, which is why the optimal approach is a bit trickier.
+
+# Implemenetation:
+def mergeSortUnoptimal(array):
+    # Base case where array is of size 1
+    if len(array) == 1:
+        return array
+    # Find the middle of the array
+    middle = len(array) // 2
+    # Split the left and right side of the arrays accordingly
+    leftSide = array[:middle]
+    rightSide = array[middle:]
+    # Merge the arrays but only after making subsequent calls to split the arrays
+    return mergeArrays(mergeSort(leftSide), mergeSort(rightSide))
+
+# Function to handle merging the arrays
+def mergeArrays(left, right):
+    # Dummy array that will hold the final sorted array
+    sorted = [None] * (len(left) + len(right))
+    # Set the variables used to traverse each array to 0
+    k = i = j = 0
+
+    # So long as the end of either sides have not been reached, iterate through both
+    while i < len(left) and j < len(right):
+        # If the left side value is smaller than the right side value
+        if left[i] <= right[j]:
+            # Make the equivalent position in the sorted array the left value
+            sorted[k] = left[i]
+            # Increment the left side variable to keep traversing
+            i += 1
+        # Else that means that the right side value is smaller and the same thing is done as above, only now using the right side value
+        else:
+            sorted[k] = right[j]
+            j += 1
+        # Increment the sorted array value to keep traversing
+        k += 1
+    # In the case where the loop is broken, one of the arrays could still need to be traversed. Thus, so long as the matching traverse variables
+    # are less than the length of their matching sides, iterate through them and set their values to be in the sorted array.
+    while i < len(left):
+        sorted[k] = left[i]
+        i += 1
+        k += 1
+    while j < len(right):
+        sorted[k] = right[j]
+        j += 1
+        k += 1
+    return sorted
 
 
 # Optimal Explanation:
