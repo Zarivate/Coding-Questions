@@ -49,9 +49,104 @@ example_jobs2 = [
 # There are two jobs with a deadline in 5 days, but only 1 of them has a payment of 3 while the other has a payment of 1.
 # Optimally, the job with a payment of 3 should be done instead but preferably on the 5th day. That way, the 4 days before 
 # that other jobs can be done. Following the same pattern of choosing the higher paying jobs for any days where the deadlines
-# overlap. In other words, the goal is to find the maximum pay possible on each specific day and add them up to det your 
+# overlap. In other words, the goal is to find the maximum pay possible on each specific day and add them up to get your 
 # overall max pay. This can be done through either sorting the array beforehand or iterating through the array multiple
 # times for each day. In otherwords iterating at most 7 days, as that is how many days are in a week.
 
-# Implementation:
 
+
+# Implementation:
+def optimalFreelance(jobs):
+    # 7 days in a week
+    daysLeft = 7
+    # Variable to hold the total pay
+    totalPay = 0
+    # While loop that at most will iterate 7 times 
+    while daysLeft > 0:
+        # Variable to hold the maximum amount of payment on the day
+        maxDayPay = 0
+        # Position of the job in the jobs array
+        jobIdx = None
+        # Iterate through every job in the jobs array, while keeping track of their positions
+        for idx, job in enumerate(jobs):
+            # If job is found that is greater than the number of daysLeft to work in the week, in otherwords a job
+            # that has a deadline capable of being done within any day on and before the daysLeft, and the payment is
+            # greater than the previously found maxPayment of another job
+            if job["deadline"] >= daysLeft and job["payment"] > maxDayPay:
+                # Set the maxDayPay variable equal to that job's payment
+                maxDayPay = job["payment"]
+                # Store the idx
+                jobIdx = idx
+
+        # If the pay is greater than 0
+        if maxDayPay != 0:
+            # Add it to the total
+            totalPay += maxDayPay
+            # Remove the job from the jobs array to shorten iteration
+            jobs.pop(jobIdx)
+        # Decrement the possible days able to work
+        daysLeft -= 1
+    return totalPay
+
+
+# In depth breakdown:
+example_jobs3 = [
+    {"deadline": 1, "payment": 1}, # 0
+    {"deadline": 2, "payment": 1}, # 1
+    {"deadline": 5, "payment": 1}, # 2
+    {"deadline": 6, "payment": 2}, # 3 
+    {"deadline": 7, "payment": 3}, # 4 
+]
+
+# daysLeft = 7
+# totalPay = 0
+# Enter outer while loop
+# maxDayPay = 0
+# jobIdx = 0
+# Enter inner for loop
+
+# At first job,
+# jobs[0] = deadline: 1, payment: 1
+# deadline: 1 < 7, payment: 1 > 0
+# Payment is greater than maxDayPay but deadline is less than the number of days left. Meaning it's not optimal to do this
+# job right now so move onto next job
+
+# jobs[1] = deadline: 2, payment: 1
+# deadline: 2 < 7, payment: 1 > 0
+# Payment is greater than maxDayPay but deadline is less than the number of days left. Meaning it's not optimal to do this
+# job right now so move onto next job
+
+# jobs[2] = deadline: 5, payment: 1
+# deadline: 5 < 7, payment: 1 > 0
+# Payment is greater than maxDayPay but deadline is less than the number of days left. Meaning it's not optimal to do this
+# job right now so move onto next job
+
+# jobs[3] = deadline: 6, payment: 2
+# deadline: 6 < 7, payment: 2 > 0
+# Payment is greater than maxDayPay but deadline is less than the number of days left. Meaning it's not optimal to do this
+# job right now so move onto next job
+
+# jobs[4] = deadline: 7, payment: 3
+# deadline: 7 <= 7, payment: 3 > 0
+# Both deadline and payment match conditions, so variables can be overwritten with their variables
+# maxDayPay = 3
+# jobIdx = 4
+
+# Exit out of for loop now and check if condition
+# maxDayPay = 3, 3 != 0 so enter if check
+# Add totalPay and remove job from jobs array
+# totalPay += 3
+# jobs.pop(4)
+
+# totalPay = 3
+# example_jobs3 = [
+#     {"deadline": 1, "payment": 1}, # 0
+#     {"deadline": 2, "payment": 1}, # 1
+#     {"deadline": 5, "payment": 1}, # 2
+#     {"deadline": 6, "payment": 2}, # 3 
+# ]
+# Decrement daysLeft as now there is 1 less day able to be worked on
+# daysLeft -= 1, daysLeft = 6
+# Repeat process to find can do all jobs for a totalPay of 8
+
+print(optimalFreelance(example_jobs3))
