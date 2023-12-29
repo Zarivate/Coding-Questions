@@ -24,7 +24,7 @@ from resizeImg import *
 # Example:
 start = 0
 
-edges = [
+example_edges = [
     [[1, 7]], # This represents vertex 0, that has one outgoing edge to 1 with a weight of 7
     [[2, 6], [3, 20], [4, 3]], # This represents vertex 1 with 3 outgoing edges, an edge to 2 with a weight of 6, edge to 3 with weight of 20, and edge to 4 with weight of 3
     [[3, 14]], # This represents vertex 2, that has one outgoing edge to 3 with a weight of 14
@@ -33,9 +33,7 @@ edges = [
     [],
 ]
 
-# Visual example of problem
-img_path = "Extra and Dynamic Programming\dijkstrasalgorithmexample.png"
-imgResizeHalf(img_path, "Dijikstra's Algorithm Example")
+
 
 # Answer
 # [0, 7, 13, 27, 10, -1]
@@ -151,5 +149,109 @@ imgResizeHalf(img_path, "Dijikstra's Algorithm Example")
 # everytime the node with the shortest distance needed to be found to updated the visited data structure. This results in a time complexity
 # of O(v^2 + e) time. V^2 from having to iterate through the entire array of length V each time at the end of every node, and the e from
 # having to go over every edge, only once however.
+def dijkstrasAlgorithm(start, edges):
+    # Get the number of nodes/vertices
+    numVertices = len(edges)
+
+    # Create the data structure to hold and update the shortest paths to each node
+    minDistances = [float("inf") for _ in range(numVertices)]
+    # Set the starting node distance to be 0
+    minDistances[start] = 0
+
+    # Create set to hold the visited nodes
+    visited = set()
+
+    # Keep iterating until all the nodes have been visited. This is a time complexity of V,
+    while len(visited) != numVertices:
+        # Get the current node and it's current minimum distance. This is another time complexity of V, which is where the v^2 comes
+        vertex, currMinDistance = getInfo(minDistances, visited)
+
+        # If any node's current minimum distance is ever still infinity, can break out of loop
+        if currMinDistance == float("inf"):
+            break
+
+        # Add the current node to the visited data structure
+        visited.add(vertex)
+
+        # Iterate through the current node's edges/outgoing paths
+        for edge in edges[vertex]:
+
+            # Grab the destination node and the path/weight to get to it
+            node, path = edge
+
+            # If the node has ever already been visited, can skip over it
+            if node in visited:
+                continue
+
+            # Calculate the total distance to get to the destination node using the distance to the current node + the distance to the new one
+            newDistance = currMinDistance + path
+            # Grab the current minimum distance to the destination node
+            currPathDistance = minDistances[node]
+            # Compate the two, update accordingly
+            if newDistance < currPathDistance:
+                minDistances[node] = newDistance
+
+    # Return a list of the shortest paths to each node, made easy with a lambda function.
+    return list(map(lambda x: -1 if x == float("inf") else x, minDistances))
+
+
+# Function to get the following node to iterate through, IE: The unvisited node with the shortest distance
+def getInfo(distances, visited):
+    # Default values for comparison
+    currMinDistance = float("inf")
+    node = -1
+
+    # This is where the v^2 would come into play, would have to iterate thorugh every value in the minDistances array at every node.
+    for nodeIdx, distance in enumerate(distances):
+        # If the node has already been visited, can skip it
+        if nodeIdx in visited:
+            continue
+        # Else, check to see if the node's current Minimum distance is less than or equal to infinity,
+        if distance <= currMinDistance:
+            # If so then grab the node and set the current minimum distance to be the found distance
+            node = nodeIdx
+            currMinDistance = distance
+
+    return node, currMinDistance
  
- 
+# Bonus: A short and quick rundown of getInfo using the first pass.
+
+# This is the first call to getInfo from the outer while loop in the main function
+# vertex, currMinDistance = getInfo(minDistances, visited)
+
+# Breaks down like so
+# getInfo(distances, visited)
+# getInfo(minDistances[0, inf, inf, inf, inf, inf], {})
+
+# currMinDistance = float("inf")
+# node = -1
+
+# Enter for loop
+# nodeidx = 0, distance = 0
+# 0 not in visited, so keep going in for loop
+# 0 < infinity, so grab the nodeIdx as the node to be iterated over and return the shorter distance
+# node = 0
+# currMinDistance = 0
+# return 0, 0
+
+# vertex, currMinDistance = 0, 0
+
+def printAnswer(array):
+    for value in array:
+        print(value, end=" ")
+
+
+printAnswer(dijkstrasAlgorithm(start,example_edges))
+
+# Visual example of problem
+img_path = "Extra and Dynamic Programming\dijkstrasalgorithmexample.png"
+imgResizeHalf(img_path, "Dijikstra's Algorithm Example")
+
+
+# Optimal Solution: The optimal solution would only save time and would be done using a MinHeap. Would no longer need to iterate over
+# every node every time the following visited node needed to be found. Instead could just pop off the top value in the MinHeap stack
+# and result in a time and space complexity of.
+# O((v + e) * log(v)) time | O(v) space
+# The v + e comes from iterating through every node and every node's edges once, while the log(v) comes from finding the minimum not
+# visited node at the end of every node. Ideally wouldn't need to contruct a MinHeap with proper functions and could just use built in 
+# classes and functions though.
