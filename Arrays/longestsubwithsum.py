@@ -146,24 +146,35 @@ target = 10
 
 # Implementation:
 def longestSubWithSum(array, targetSum):
+    # Create array to hold return answer
     answer_array = []
 
+    # Create variables to hold running sum and pointers
     currentSum = 0
-    leftPointer = 0
-    rightPointer = 0
+    leftPointer, rightPointer = 0, 0
 
+    # Iterate until right pointer is at the end of the array
     while rightPointer < len(array):
+        # Update the running total, since both start at the same point. Only have to update using 1 pointer. Use the 
+        # right one as that will be the one iterating till the end.
         currentSum += array[rightPointer]
+        # Check to see if the current running total is greater than the target, if so then iterate the left pointer by 1 and 
+        # subtract from the running total. May have to do this multiple times so make sure the left pointer never overtakes the right.
         while leftPointer < rightPointer and currentSum > targetSum:
             currentSum -= array[leftPointer]
             leftPointer += 1
 
+        # If the target value is reached
         if currentSum == targetSum:
+            # Check to make sure the length of the current found subarray is greater than the length of the subarray held
+            # in the current return array. That or that there's anything held within at all before updating the return array.
             if len(answer_array) == 0 or answer_array[1] - answer_array[0] < rightPointer - leftPointer:
                 answer_array = [leftPointer, rightPointer]
 
+        # If none of the other conditions are true just iterate the right pointer
         rightPointer += 1
     
     return answer_array
 
 print(longestSubWithSum(example_array, target))
+
