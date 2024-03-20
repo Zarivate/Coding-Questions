@@ -41,12 +41,129 @@ target = 10
 # left_pointer = example_array[0] = 1
 # right_pointer = example_array[2] = 3
 #**********************************************************************************************
-# current_sum = 3 + 2 = 5, current_sum = 5, the previous sum is incremented by the new index value
+# current_sum = 3 + 3 = 6, current_sum = 6, the previous sum is incremented by the new index value
 #**********************************************************************************************
 # target = 10
-# 5 < 10, 5 is less than 10 so increase the right pointer by 1.
+# 6 < 10, 6 is less than 10 so increase the right pointer by 1.
+
+# left_pointer = example_array[0] = 1
+# right_pointer = example_array[3] = 4
+# current_sum = 6 + 4, current_sum = 10
+# target = 10
+#**********************************************************************************************
+# 10 = 10, target value found so take note of the pointer indexes
+# answer_index = [0, 3], length = 4
+# Not at end of array so keep going, increment right pointer by 1
+#**********************************************************************************************
+
+# left_pointer = example_array[0] = 1
+# right_pointer = example_array[4] = 3
+# current_sum = 10 + 3, current_sum = 13
+# target = 10
+# 13 > 10, 13 is greater than 10 so increment left pointer by 1
+
+# left_pointer = example_array[1] = 2
+# right_pointer = example_array[4] = 3
+# current_sum = 13 - 1, current_sum = 12
+# target = 10
+# 12 > 10, 12 is greater than 10 so increment left pointer by 1 again
+
+# left_pointer = example_array[2] = 3
+# right_pointer = example_array[4] = 3
+# current_sum = 12 - 2, current_sum = 10
+# target = 10
+#**********************************************************************************************
+# 10 > 10, target value found so take note of the pointer indexes and compare to previous answer subarray length
+# answer_index = [2, 4], length = 3
+# answer_index = [0, 3], length = 4
+# Not longer than previous subarray, so don't change return answer
+# Not at end of array so keep going, increment right pointer by 1
+#**********************************************************************************************
+
+# left_pointer = example_array[2] = 3
+# right_pointer = example_array[5] = 3
+# current_sum = 10 + 3, current_sum = 13
+# target = 10
+# 13 > 10, greater sum than target value so increment left pointer by 1
+
+# left_pointer = example_array[3] = 4
+# right_pointer = example_array[5] = 3
+# current_sum = 13 - 4, current_sum = 9
+# target = 10
+# 9 < 10, smaller sum than target value so increment right pointer by 1
+
+# left_pointer = example_array[3] = 4
+# right_pointer = example_array[6] = 1
+# current_sum = 9 + 1, current_sum = 10
+# target = 10
+#**********************************************************************************************
+# 10 = 10, target value found, check to see if length of subarray found is greater than previous one
+# answer_index = [3, 6], length = 4
+# answer_index = [0, 3], length = 4
+# Not longer than previous subarray, so don't change return answer
+# Not at end of array so keep going, increment right pointer by 1
+#**********************************************************************************************
+
+# left_pointer = example_array[3] = 4
+# right_pointer = example_array[7] = 2
+# current_sum = 10 + 2, current_sum = 12
+# target = 10
+# 12 > 10, increment left pointer by 1
+
+# left_pointer = example_array[4] = 3
+# right_pointer = example_array[7] = 1
+# current_sum = 12 - 3, current_sum = 9
+# target = 10
+# 9 < 10, increment right pointer by 1
 
 
+#**********************************************************************************************
+# left_pointer = example_array[4] = 3
+# right_pointer = example_array[8] = 1
+# current_sum = 9 + 1 = 10
+# target = 10
+# 10 = 10, found target sum so check length of subarray
+# answer_index = [4, 8], length = 5
+# answer_index = [0, 3], length = 4
+# Longer than previous subarray, so change return array to [4, 8]
+# Keep iterating through array, increment right pointer by 1
+#**********************************************************************************************
 
+# left_pointer = example_array[4] = 3
+# right_pointer = example_array[9] = 2
+# current_sum = 10 + 2 = 12
+# target = 10
+# 12 > 10, increment left pointer by 1
+
+# left_pointer = example_array[5] = 3
+# right_pointer = example_array[9] = 2
+# current_sum = 12 - 3 = 9
+# target = 10
+# 9 < 10, increment right pointer by 1
+
+# At end of array by now, so return stored answer subarray of 
+# [4, 8]
 
 # Implementation:
+def longestSubWithSum(array, targetSum):
+    answer_array = []
+
+    currentSum = 0
+    leftPointer = 0
+    rightPointer = 0
+
+    while rightPointer < len(array):
+        currentSum += array[rightPointer]
+        while leftPointer < rightPointer and currentSum > targetSum:
+            currentSum -= array[leftPointer]
+            leftPointer += 1
+
+        if currentSum == targetSum:
+            if len(answer_array) == 0 or answer_array[1] - answer_array[0] < rightPointer - leftPointer:
+                answer_array = [leftPointer, rightPointer]
+
+        rightPointer += 1
+    
+    return answer_array
+
+print(longestSubWithSum(example_array, target))
