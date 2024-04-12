@@ -229,7 +229,7 @@ print_tree_depth_first_search(new_tree_iterative)
 
 # Visual example of problem alongside answer
 window = Tk()
-example_image = PhotoImage(file='Merge_binary_trees_example.png')
+example_image = PhotoImage(file='BinaryTrees/Merge_binary_trees_example.png')
 example_label = Label(image=example_image)
 example_label.pack()
 window.mainloop()

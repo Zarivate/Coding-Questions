@@ -322,7 +322,7 @@ print(sortKSortedArray(example_k_array, example_k))
 
 # Visual of heap at each iteration
 window = Tk()
-example_image = PhotoImage(file='k_sort_array_visual.png')
+example_image = PhotoImage(file='Heaps/k_sort_array_visual.png')
 example_label = Label(image=example_image)
 example_label.pack()
 window.mainloop()

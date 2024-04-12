@@ -2,7 +2,7 @@
 # that holds a single function for that exact purpose. Should've done this far soon but it is what it is.
 
 import cv2
-import imutils
+import imutils 
 from screeninfo import get_monitors
 from multiprocessing.sharedctypes import Value
 

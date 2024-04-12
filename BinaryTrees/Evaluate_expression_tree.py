@@ -148,7 +148,8 @@ print(evaluate_tree(example_tree))
 
 # Visual example of problem
 window = Tk()
-example_image = PhotoImage(file='evaluate_expression_tree_example.png')
+file_path = "BinaryTrees/evaluate_expression_tree_example.png"
+example_image = PhotoImage(file=file_path)
 example_label = Label(image=example_image)
 example_label.pack()
 window.mainloop()

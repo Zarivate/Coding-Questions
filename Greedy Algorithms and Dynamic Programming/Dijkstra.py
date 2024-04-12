@@ -244,7 +244,7 @@ def printAnswer(array):
 printAnswer(dijkstrasAlgorithm(start,example_edges))
 
 # Visual example of problem
-img_path = "Extra and Dynamic Programming\dijkstrasalgorithmexample.png"
+img_path = "Greedy Algorithms and Dynamic Programming/dijkstrasalgorithmexample.png"
 imgResizeHalf(img_path, "Dijikstra's Algorithm Example")
 
 

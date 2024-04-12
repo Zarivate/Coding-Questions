@@ -31,7 +31,7 @@ from tkinter import *
 
 # Graph would look something like this
 window = Tk()
-example_image = PhotoImage(file='two_colorable_example.png')
+example_image = PhotoImage(file='Graphs/two_colorable_example.png')
 example_label = Label(image=example_image, height=600)
 example_label.pack()
 window.mainloop()

@@ -234,7 +234,7 @@ print(sunset_views_no_stack(sample_buildings2, sample_direction2))
 
 # Visual example of problem
 window = Tk()
-example_image = PhotoImage(file='sunset_views_example.png')
+example_image = PhotoImage(file='Stacks/sunset_views_example.png')
 example_label = Label(image=example_image)
 example_label.pack()
 window.mainloop()

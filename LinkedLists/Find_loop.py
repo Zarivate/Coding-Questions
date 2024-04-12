@@ -149,7 +149,7 @@ print(findLoop(LL1).value)
 
 # Visual example of problem alongside answer
 window = Tk()
-example_image = PhotoImage(file='find_loop_visual.png')
+example_image = PhotoImage(file='LinkedLists/find_loop_visual.png')
 example_label = Label(image=example_image)
 example_label.pack()
 window.mainloop()

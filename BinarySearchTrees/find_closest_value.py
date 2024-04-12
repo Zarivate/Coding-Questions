@@ -33,7 +33,7 @@ sample_tree.right.left.right = BST(14)
 
 # Would look something like this
 window = Tk()
-example_image = PhotoImage(file='closest_value_example.png')
+example_image = PhotoImage(file='BinarySearchTrees/closest_value_example.png')
 example_label = Label(image=example_image)
 example_label.pack()
 window.mainloop()

@@ -35,7 +35,7 @@ example_graph.children[0].children[1].addChild("I").addChild("J")
 example_graph.children[2].children[0].addChild("K")
 
 # Visual of problem
-img_path = "Graphs\BFSGraphVisual.png"
+img_path = "Graphs/BFSGraphVisual.png"
 imgResizeHalf(img_path, "Original")
 
 # Answer:
@@ -119,7 +119,7 @@ imgResizeHalf(img_path, "Original")
 # the queue would hold every node besides the starting node, which rounds down to just v. IE:
 
 # Visual of worst case scenario
-img_path = "Graphs\BFSGraphVisual2.png"
+img_path = "Graphs/BFSGraphVisual2.png"
 imgResizeHalf(img_path, "Worst Case Scenario")
 
 
